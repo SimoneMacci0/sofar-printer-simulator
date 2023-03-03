@@ -1,0 +1,5 @@
+sofar_printer_simulator/.vscode/*
+sofar_printer_simulator/sofar_printer_simulator/__pycache__/*
+sofar_printer_simulator/sofar_printer_simulator/lib/__pycache__/*
+sofar_printer_simulator/sofar_printer_simulator/motor_x_controller.py
+sofar_printer_simulator/sofar_printer_simulator/motor_y_controller.py
