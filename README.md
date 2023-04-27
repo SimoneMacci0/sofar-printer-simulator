@@ -40,6 +40,8 @@ You need to implement the following architecture, made up of 5 nodes:
 
 ![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png)
 
+asdasd
+
 ### Important Notes
 
 **BEWARE: it is mandatory to rename your package before submission on AulaWeb (make sure to change the package name in the *setup.py*, *package.xml*, under the *resource* folder and in the *setup.cfg*) according to the following template &rarr;** *&lt;surname&gt;_&lt;matricola&gt;_assignment3* 
