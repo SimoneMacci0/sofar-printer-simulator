@@ -34,13 +34,12 @@ You need to implement the following architecture, made up of 5 nodes:
 
 2) The **controller nodes**, which work exactly like in the previous assignment, that is, implement a simple PID control loop to drive respectively the X and Y component of the end-effector's position. This time, however, the end-effector starts from a position which is not (0,0), therefore the two nodes need to properly initialize their position by invoking the **/end_effector_position** service exposed by the simulator.
 
-3) The **robot logic node**, which acts has *high-level controller*, invoking the **shape service node** to retrieve the vertices of the regular polygon based on input parameters (*radius* and *number of vertices*). The parameters are expected to be properly defined and initialize inside the node and later passed from the launch file. Upon receiving the list of vertices from the **shape service node**, **robot logic node** will enable drawing mode through the **/draw** topic and will start publishing vertices one by one on the **/next_waypoint** topic, which in turn will trigger the control sequence. A new vertex waypoint is published whenever the controllers signal their idle state via the **/ack_x** and **/ack_y** topics. upon completing the vertices, the node will disable drawing mode and terminate.
+3) The **robot logic node**, which acts has *high-level controller*, invoking the **shape service node** to retrieve the vertices of the regular polygon based on input parameters (*radius* and *number of vertices*). The parameters are expected to be properly defined and initialized inside the node and later passed via launch file. Upon receiving the list of vertices from the **shape service node**, **robot logic node** will enable drawing mode through the **/draw** topic and will start publishing vertices one by one on the **/next_waypoint** topic, which in turn will trigger the control sequence. A new vertex waypoint is published whenever the controllers signal their idle state via the **/ack_x** and **/ack_y** topics. upon completing the drawing process, the node will disable drawing mode and terminate.
 
-4) The **shape service node** implements a simple service for computing the vertices of a regular polygon given *radius* and *number of vertices* as request parameters, according to the following equation:
+4) The **shape service node** implements a simple service for computing the vertices of a regular polygon given *radius* (*r*) and *number of vertices* (*n*) as request parameters, according to the equation below. The appropriate interface defining the request/response model of the service needs to be implemented by you, along with the service logic. **Do not worry if the (x,y) coordinates of each vertex are expressed with respect to the end-effector. Automatic conversion to global coordinates is performed when messages are published on the /next_waypoint topic**
 
 ![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png)
 
-sada
 
 ### Important Notes
 
