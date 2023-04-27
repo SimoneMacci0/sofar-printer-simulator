@@ -40,7 +40,7 @@ You need to implement the following architecture, made up of 5 nodes:
 
 ![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png)
 
-asdasd
+sada
 
 ### Important Notes
 
