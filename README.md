@@ -38,7 +38,7 @@ You need to implement the following architecture, made up of 5 nodes:
 
 4) The **shape service node** implements a simple service for computing the vertices of a regular polygon given *radius* and *number of vertices* as request parameters, according to the following equation:
 
-![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png){ width="800" height="600" style="display: block; margin: 0 auto"}
+![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png)
 
 ### Important Notes
 
