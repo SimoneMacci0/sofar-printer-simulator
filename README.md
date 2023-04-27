@@ -19,8 +19,9 @@ Run the simulation node with the command:
 
 You need to implement the following architecture, made up of 5 nodes:
 1) The **printer_sim_node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces:
-    1. aAAa
-    2. aAaa
+    1. aaaa
+    2. alslasl
+2) 
 3) The **controller nodes**, which implement a simple PID controller to control, respectively, the horizontal and vertical motor of the crane. Feel free to implement your own controller or use available ones (e.g., [simple-pid-python](https://pypi.org/project/simple-pid/)).
 The controllers receive the target position on the **/controller_setpoint** topic and activate the control loop to drive the crane's end-effector, publishing the corresponding updated position on their respective topic. Whenever the target position is reached, the control loop stops and the controller publishes an acknowledgment message on the corresponding topic.
 3) The **robot logic node**, which acts has *high-level controller*, guiding the crane through the stages of the pick-and-place. The node waits for both controllers to be idle, then publishes the next stage of the pick-and-place on the given topic. 
