@@ -26,8 +26,6 @@ setup(
     entry_points={
         'console_scripts': [
             'printer_sim_node = sofar_printer_simulator.printer_sim_node:main', 
-            'mot_x_node = sofar_printer_simulator.motor_x_controller:main', 
-            'mot_y_node = sofar_printer_simulator.motor_y_controller:main', 
         ],
     },
 )

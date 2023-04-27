@@ -41,7 +41,7 @@ class PrinterSimNode(Node):
 
         # Publisher for next controller setpoint
         self.setpoint_pub = self.create_publisher(Point, "/controller_setpoint", 10)
-        # Service for requesting motors' starting positions
+        # Service for requesting end-effector's initial position (for the controllers)
         self.starting_pos_srv = self.create_service(EndEffectorPosition, "/end_effector_position", self.ee_position_callback)
 
         # Set simulation's end-effector in the center as initial position
@@ -64,7 +64,7 @@ class PrinterSimNode(Node):
         mode = "ON" if msg.data else "OFF"
         self.get_logger().info("Drawing mode: ({0})".format(mode))
         
-    # Callback for drawing reached waypoint and publish controller's setpoint for next one
+    # Callback for converting waypoint into global coordinates and then publishing the corresponding setpoint for controllers
     def waiypoint_callback(self, msg: Point):
         # Fill new msg for next controller's setpoint
         self.get_logger().info("Received next waypoint coordinates: ({0}, {1})".format(msg.x, msg.y))
