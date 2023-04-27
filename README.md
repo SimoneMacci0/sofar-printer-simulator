@@ -18,11 +18,17 @@ Run the simulation node with the command:
 ## Assignment
 
 You need to implement the following architecture, made up of 5 nodes:
-1) The **printer_sim_node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces:
-    1. aaaa
-    2. alslasl
+1) The **printer_sim_node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces.
+    *Subscriber Topics*
+        1. **/draw** boolean value which can be set to true or false to activate/deactivate drawing mode
+        2. **/next_waypoint** stores the (x,y) coordinates of the next polygon vertex, expressed with respect to the end-effector (that is, considering the end-effector as origin)
+    *Published Topic*
+        1. **/controller_setpoint** stores the (x,y) target coordinates for the end-effector, expressed in the global reference frame. A new setpoint is automatically published by the simulation upon receiving the corresponding message on **/next_waypoint**, thus performing implicit conversion from end-effector coordinates to global ones, which are needed by the controllers.
+    *Exposed Service*
+        1. **/end_effector_position** since end-effector does not start from the top-left corner (which is considered the origin in the global frame), this service allows retrieving the (x,y) initial coordinates of the end-effector to properly initialize the controllers' internal variables.
 2) 
-3) The **controller nodes**, which implement a simple PID controller to control, respectively, the horizontal and vertical motor of the crane. Feel free to implement your own controller or use available ones (e.g., [simple-pid-python](https://pypi.org/project/simple-pid/)).
+3) 
+4) The **controller nodes**, which implement a simple PID controller to control, respectively, the horizontal and vertical motor of the crane. Feel free to implement your own controller or use available ones (e.g., [simple-pid-python](https://pypi.org/project/simple-pid/)).
 The controllers receive the target position on the **/controller_setpoint** topic and activate the control loop to drive the crane's end-effector, publishing the corresponding updated position on their respective topic. Whenever the target position is reached, the control loop stops and the controller publishes an acknowledgment message on the corresponding topic.
 3) The **robot logic node**, which acts has *high-level controller*, guiding the crane through the stages of the pick-and-place. The node waits for both controllers to be idle, then publishes the next stage of the pick-and-place on the given topic. 
 Each pick-and-place action begins with the PICK stage (thus you will need to publish a **std_msgs/Int64** message with the data field set to 1) and concludes with the DROP stage, where the current container is delivered and a new one will spawn inside the simulation, increasing your overall score.
