@@ -17,6 +17,8 @@ Run the simulation node with the command:
 
 ## Assignment
 
+![sofar_printer_simulator/resource/architecture.pdf](sofar_printer_simulator/resource/architecture.png)
+
 You need to implement the following architecture, made up of 5 nodes:
 1) The **printer_sim_node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces.
     1. *Subscriber Topics*
@@ -32,8 +34,6 @@ You need to implement the following architecture, made up of 5 nodes:
 The controllers receive the target position on the **/controller_setpoint** topic and activate the control loop to drive the crane's end-effector, publishing the corresponding updated position on their respective topic. Whenever the target position is reached, the control loop stops and the controller publishes an acknowledgment message on the corresponding topic.
 3) The **robot logic node**, which acts has *high-level controller*, guiding the crane through the stages of the pick-and-place. The node waits for both controllers to be idle, then publishes the next stage of the pick-and-place on the given topic. 
 Each pick-and-place action begins with the PICK stage (thus you will need to publish a **std_msgs/Int64** message with the data field set to 1) and concludes with the DROP stage, where the current container is delivered and a new one will spawn inside the simulation, increasing your overall score.
-
-![sofar_printer_simulator/resource/architecture.pdf](sofar_printer_simulator/resource/architecture.png)
 
 ### Important Notes
 
