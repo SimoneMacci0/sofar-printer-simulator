@@ -7,7 +7,7 @@ from .lib.printer_sim import PrinterSimulation
 from std_msgs.msg import Float64, Bool
 from geometry_msgs.msg import Point
 
-from sofar_printer_simulator_interface.srv import MotorsPosition
+from sofar_printer_simulator_interface.srv import EndEffectorPosition
 
 # Thread to run simulation in background
 class PrinterSimThread(Thread):
@@ -42,7 +42,7 @@ class PrinterSimNode(Node):
         # Publisher for next controller setpoint
         self.setpoint_pub = self.create_publisher(Point, "/controller_setpoint", 10)
         # Service for requesting motors' starting positions
-        self.starting_pos_srv = self.create_service(MotorsPosition, "/motors_position_srv", self.motors_position_callback)
+        self.starting_pos_srv = self.create_service(EndEffectorPosition, "/end_effector_position", self.ee_position_callback)
 
     # Callback for setting position of motor x 
     def callback_motor_x(self, msg: Float64):
@@ -66,11 +66,11 @@ class PrinterSimNode(Node):
         next_setpoint.x, next_setpoint.y = self.sim.get_coords_in_ee_frame(msg.x, msg.y)
         self.setpoint_pub.publish(next_setpoint)
  
-    # Callback for retrieving initial motors positions
-    def motors_position_callback(self, request: MotorsPosition.Request, response: MotorsPosition.Response):
+    # Callback for retrieving initial end-effector's position (to properly initialize controllers)
+    def ee_position_callback(self, request: EndEffectorPosition.Request, response: EndEffectorPosition.Response):
         drawing_area = self.sim.get_drawing_area()
-        response.motors_positions.append(0.5 * drawing_area[0])
-        response.motors_positions.append(0.5 * drawing_area[1])
+        response.end_effector_position.x = 0.5 * drawing_area[0]
+        response.end_effector_position.y = 0.5 * drawing_area[1]
         return response
         
 
