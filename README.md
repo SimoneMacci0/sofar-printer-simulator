@@ -30,13 +30,13 @@ Each pick-and-place action begins with the PICK stage (thus you will need to pub
 
 **BEWARE: it is mandatory to rename your package before submission on AulaWeb (make sure to change the package name in the *setup.py*, *package.xml*, under the *resource* folder and in the *setup.cfg*) according to the following template &rarr;** *&lt;surname&gt;_&lt;matricola&gt;_assignment3* 
 
-**BEWARE2: It is mandatory to launch the full simulation using the provided launch file. Submissions not including a launch file to open up all nodes together will not be evaluated!!!
+**BEWARE2: It is mandatory to launch the full simulation using the provided launch file. Submissions not including a launch file to open up all nodes together will not be evaluated!!!**
 
 Good luck ;)
 
 ## Expected Output
 
-![https://github.com/SimoneMacci0/sofar-printer-simulator/printer-sim.gif](https://github.com/SimoneMacci0/sofar-crane-simulator/blob/main/output.gif)
+![printer-sim-gif](https://github.com/SimoneMacci0/sofar-printer-simulator/blob/main/printer_sim.gif)
 
 ## Troubleshooting
 
