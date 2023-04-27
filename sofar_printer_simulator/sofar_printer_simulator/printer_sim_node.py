@@ -44,6 +44,12 @@ class PrinterSimNode(Node):
         # Service for requesting motors' starting positions
         self.starting_pos_srv = self.create_service(EndEffectorPosition, "/end_effector_position", self.ee_position_callback)
 
+        # Set simulation's end-effector in the center as initial position
+        drawing_area = self.sim.get_drawing_area()
+        self.sim.set_end_effector_position(0.5 * drawing_area[0], 0.5 * drawing_area[1])
+
+        self.get_logger().info("Printer simulation node up and running")
+
     # Callback for setting position of motor x 
     def callback_motor_x(self, msg: Float64):
         self.sim.set_end_effector_position(x=msg.data)
@@ -80,10 +86,6 @@ def main(args=None):
 
     # Create node for simulation
     printer_sim_node = PrinterSimNode()
-
-    # Set printer's end-effector initial position in the center
-    drawing_area = printer_sim_node.sim.get_drawing_area()
-    printer_sim_node.sim.set_end_effector_position(0.5 * drawing_area[0], 0.5 * drawing_area[1])
     
     # Spin indefinitely..
     rclpy.spin(printer_sim_node)
