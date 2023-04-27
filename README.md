@@ -20,12 +20,12 @@ Run the simulation node with the command:
 You need to implement the following architecture, made up of 5 nodes:
 1) The **printer_sim_node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces.
     1. *Subscriber Topics*
-      1) **/draw** boolean value which can be set to true or false to activate/deactivate drawing mode
-      2) **/next_waypoint** stores the (x,y) coordinates of the next polygon vertex, expressed with respect to the end-effector (that is, considering the end-effector as origin)
+       1) **/draw** boolean value which can be set to true or false to activate/deactivate drawing mode
+       2) **/next_waypoint** stores the (x,y) coordinates of the next polygon vertex, expressed with respect to the end-effector (that is, considering the end-effector as origin)
     2. *Published Topic*
-      1) **/controller_setpoint** stores the (x,y) target coordinates for the end-effector, expressed in the global reference frame. A new setpoint is automatically published by the simulation upon receiving the corresponding message on **/next_waypoint**, thus performing implicit conversion from end-effector coordinates to global ones, which are needed by the controllers.
+       1) **/controller_setpoint** stores the (x,y) target coordinates for the end-effector, expressed in the global reference frame. A new setpoint is automatically published by the simulation upon receiving the corresponding message on **/next_waypoint**, thus performing implicit conversion from end-effector coordinates to global ones, which are needed by the controllers.
     3. *Exposed Service*
-      1) **/end_effector_position** since end-effector does not start from the top-left corner (which is considered the origin in the global frame), this service allows retrieving the (x,y) initial coordinates of the end-effector to properly initialize the controllers' internal variables.
+       1) **/end_effector_position** since end-effector does not start from the top-left corner (which is considered the origin in the global frame), this service allows retrieving the (x,y) initial coordinates of the end-effector to properly initialize the controllers' internal variables.
 2) 
 3) 
 4) The **controller nodes**, which implement a simple PID controller to control, respectively, the horizontal and vertical motor of the crane. Feel free to implement your own controller or use available ones (e.g., [simple-pid-python](https://pypi.org/project/simple-pid/)).
