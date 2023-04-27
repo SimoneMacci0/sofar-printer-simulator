@@ -17,23 +17,27 @@ Run the simulation node with the command:
 
 ## Assignment
 
-![sofar_printer_simulator/resource/architecture.pdf](sofar_printer_simulator/resource/architecture.png)
+![sofar_printer_simulator/resource/architecture.png](sofar_printer_simulator/resource/architecture.png)
 
 You need to implement the following architecture, made up of 5 nodes:
-1) The **printer_sim_node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces.
-    1. *Subscriber Topics*
+
+1) The **printer sim node** is already provided with this repository and acts as the simulator of the robotic printer, exposing all the necessary interfaces.
+    1. *Subscribed Topics*
        1) **/draw** boolean value which can be set to true or false to activate/deactivate drawing mode
        2) **/next_waypoint** stores the (x,y) coordinates of the next polygon vertex, expressed with respect to the end-effector (that is, considering the end-effector as origin)
+       3) **/motor_x** stores the updated X component of the end-effector's position, resulting from the control loop
+       4) **/motor_y** stores the updated Y component of the end-effector's position, resulting from the control loop
     2. *Published Topic*
        1) **/controller_setpoint** stores the (x,y) target coordinates for the end-effector, expressed in the global reference frame. A new setpoint is automatically published by the simulation upon receiving the corresponding message on **/next_waypoint**, thus performing implicit conversion from end-effector coordinates to global ones, which are needed by the controllers.
     3. *Exposed Service*
        1) **/end_effector_position** since end-effector does not start from the top-left corner (which is considered the origin in the global frame), this service allows retrieving the (x,y) initial coordinates of the end-effector to properly initialize the controllers' internal variables.
-2) 
-3) 
-4) The **controller nodes**, which implement a simple PID controller to control, respectively, the horizontal and vertical motor of the crane. Feel free to implement your own controller or use available ones (e.g., [simple-pid-python](https://pypi.org/project/simple-pid/)).
-The controllers receive the target position on the **/controller_setpoint** topic and activate the control loop to drive the crane's end-effector, publishing the corresponding updated position on their respective topic. Whenever the target position is reached, the control loop stops and the controller publishes an acknowledgment message on the corresponding topic.
-3) The **robot logic node**, which acts has *high-level controller*, guiding the crane through the stages of the pick-and-place. The node waits for both controllers to be idle, then publishes the next stage of the pick-and-place on the given topic. 
-Each pick-and-place action begins with the PICK stage (thus you will need to publish a **std_msgs/Int64** message with the data field set to 1) and concludes with the DROP stage, where the current container is delivered and a new one will spawn inside the simulation, increasing your overall score.
+
+2) The **controller nodes**, which work exactly like in the previous assignment, that is, implement a simple PID control loop to drive respectively the X and Y component of the end-effector's position. This time, however, the end-effector starts from a position which is not (0,0), therefore the two nodes need to properly initialize their position by invoking the **/end_effector_position** service exposed by the simulator.
+
+3) The **robot logic node**, which acts has *high-level controller*, invoking the **shape service node** to retrieve the vertices of the regular polygon based on input parameters (*radius* and *number of vertices*). The parameters are expected to be properly defined and initialize inside the node and later passed from the launch file. Upon receiving the list of vertices from the **shape service node**, **robot logic node** will enable drawing mode through the **/draw** topic and will start publishing vertices one by one on the **/next_waypoint** topic, which in turn will trigger the control sequence. A new vertex waypoint is published whenever the controllers signal their idle state via the **/ack_x** and **/ack_y** topics. upon completing the vertices, the node will disable drawing mode and terminate.
+
+4) The **shape service node** implements a simple service for computing the vertices of a regular polygon given *radius* and *number of vertices* as request parameters, according to the following equation:
+![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png)
 
 ### Important Notes
 
