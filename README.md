@@ -37,7 +37,8 @@ You need to implement the following architecture, made up of 5 nodes:
 3) The **robot logic node**, which acts has *high-level controller*, invoking the **shape service node** to retrieve the vertices of the regular polygon based on input parameters (*radius* and *number of vertices*). The parameters are expected to be properly defined and initialize inside the node and later passed from the launch file. Upon receiving the list of vertices from the **shape service node**, **robot logic node** will enable drawing mode through the **/draw** topic and will start publishing vertices one by one on the **/next_waypoint** topic, which in turn will trigger the control sequence. A new vertex waypoint is published whenever the controllers signal their idle state via the **/ack_x** and **/ack_y** topics. upon completing the vertices, the node will disable drawing mode and terminate.
 
 4) The **shape service node** implements a simple service for computing the vertices of a regular polygon given *radius* and *number of vertices* as request parameters, according to the following equation:
-![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png){ width="800" height="600" style="display: block; margin: 0 auto" }
+
+![sofar_printer_simulator/resource/vertex_eq.png](sofar_printer_simulator/resource/vertex_eq.png){ width="800" height="600" style="display: block; margin: 0 auto"}
 
 ### Important Notes
 
